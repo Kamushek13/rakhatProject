@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html ng-app="rakhat-project">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.angularjs.org/1.5.8/angular.js"></script>
+    <script src="app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet">
+</head>
+<style>
+    .top{
+        background-image: url("https://img.freepik.com/free-vector/chocolate-background-3d-realistic-vector_163454-172.jpg?size=626&ext=jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+</style>
+<body ng-controller="ProductCtrl">
+<div class="top" style="text-align: center;">
+    <img alt= "logo" src="http://www.rakhat.kz/app/themes/rahkat/assets/images/logo.png">
+    <h1 style="color:  #ffcc00;font-size: 30px;font-weight: bold">It tastes better with us!</h1>
+    <h3 style="color:  #ffcc00;font-size: 15px;font-weight: bold">Traditions since 1942</h3>
+    <br>
+</div>
+<div class="menu">
+    <ul>
+        <li><a href="#">Certificates</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">About company</a></li>
+        <li><img  alt="background" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOlEjXLPzPVL6lEu6Ar7C4fQ286H5WuNpT0w&usqp=CAU" style="width: 50px;height: 40px;">
+            <div class="dropdown">
+                <button class="dropbtn">Join us</button>
+                <div class="dropdown-content">
+                    <a href="login.html">Login</a>
+                    <a href="#">Register</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <h1>Hello {{customer.fullname}}</h1>
+
+    <div class="row">
+        <div class="col-log-12">
+            <div id="options" class="m-b-10">
+                <span class="gallery-option-set" id="filter" data-option-key="filter">
+                    <button type="button" class="btn btn-warning" ng-repeat="category in categoryList" ng-click="getProductsByCategory(category.id)">{{category.name}}</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <h3>Product List</h3>
+    <div class="row">
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+            <th>ID</th>
+            <th>name</th>
+            <th>description</th>
+            <th>weight</th>
+            <th>unit</th>
+            <th>composition</th>
+            <th>categoryID</th>
+            <th>price</th>
+            <th>stock</th>
+            <th></th>
+            <th></th>
+            </thead>
+            <tr ng-repeat="product in productList | orderBy: 'id'">
+                <td ng-bind="product.id"></td>
+                <td ng-bind="product.name"></td>
+                <td ng-bind="product.description"></td>
+                <td ng-bind="product.weight"></td>
+                <td ng-bind="product.unit"></td>
+                <td ng-bind="product.composition"></td>
+                <td ng-bind="product.categoryId"></td>
+                <td ng-bind="product.price"></td>
+                <td ng-bind="product.stock"></td>
+                <td ng-click="incrementProduct(product)"><button class="btn btn-success btn-md"> Add to cart </button></td>
+                <td ng-click="incrementProduct(product)"><button class="btn btn-danger btn-md"> Delete from cart </button></td>
+            </tr>
+        </table>
+        <button ng-click="sendOrders()" type="button" class="btn btn-success btn-block btn-lg"> Send the order </button>
+    </div>
+
+</div>
+</body>
+
+</html>

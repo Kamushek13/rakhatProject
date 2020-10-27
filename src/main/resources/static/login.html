@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="rakhat-project">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" />
+    <script src="https://code.angularjs.org/1.5.8/angular.js"></script>
+    <script src="app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<div class="top" style="text-align: center;">
+    <img alt= "logo" src="http://www.rakhat.kz/app/themes/rahkat/assets/images/logo.png">
+    <h1 style="color: saddlebrown;font-size: 30px;font-weight: bold">It tastes better with us!</h1>
+    <h3 style="color: saddlebrown;font-size: 15px;font-weight: bold">Traditions since 1942</h3>
+    <br>
+</div>
+<div class="menu">
+    <ul>
+        <li><a href="#">Certificates</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">About company</a></li>
+        <li><img  alt="background" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOlEjXLPzPVL6lEu6Ar7C4fQ286H5WuNpT0w&usqp=CAU" style="width: 50px;height: 40px;">
+            <div class="dropdown">
+                <button class="dropbtn">Join us</button>
+                <div class="dropdown-content">
+                    <a href="#">Login</a>
+                    <a href="#">Register</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<body ng-controller="ProductCtrl">
+<div class="container">
+    <div class="row">
+        <div class="row">
+            <div class="col-lg-6">
+                <input ng-model="auth.username" type="text" placeholder="enter login" class="form-control form-control-lg inverse-mode" />
+                <input ng-model="auth.password"  type="password" placeholder="enter password" class="form-control form-control-lg inverse-mode" />
+                <div class="login-buttons">
+                    <button ng-click="login(auth)" type="submit" class="btn btn-success btn-block btn-lg">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

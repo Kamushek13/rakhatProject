@@ -1,0 +1,88 @@
+img{
+    vertical-align: middle;
+    border-radius: 50px;
+}
+
+.log{
+    background: url(https://fergana.news/siteapi/media/images/ac48998d-b1bb-457c-8d38-93922fe47ecc.jpeg) no-repeat;
+    background-size: cover;
+    color: white;
+    font-family: sans-serif;
+}
+
+body{
+    background-color: #f9ebdc;
+    font-family: 'Playfair Display', serif;
+}
+.menu li a{
+    color: #6a0d2b;
+    text-decoration: none;
+    font-size: 1.5vw;
+}
+.menu li{
+    display: flex;
+    font-family: 'Anton', sans-serif;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    height: 50px;
+}
+.menu a:hover{
+    color: red;
+    transition: .6s;
+}
+.menu ul{
+    list-style-type: none;
+    display: flex;
+    padding-inline-start: 0px;
+    margin-block-start: 0em;
+}
+.menu ul li{
+    width: 100vw;
+}
+menu{
+    position: fixed;
+    letter-spacing: 2px;
+}
+.dropbtn {
+    background-color: white;
+    color:#663300;
+    padding: 0.2vw;
+    right: 0;
+    font-size: 1.5vw;
+    border-radius: 5px;
+    border: 3px solid white ;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: auto;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #663300;
+    padding: 0.2vw;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: white;
+    color: #663300;
+}
