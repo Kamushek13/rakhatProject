@@ -20,4 +20,9 @@ public class ProductController {
     public ResponseEntity<?> getAllByCategory(@PathVariable("categoryID") Long categoryID) {
         return ResponseEntity.ok(productService.getByCategoryId(categoryID));
     }
+
+    @PostMapping("/add/{id}/{stock}")
+    public ResponseEntity<?> addStock(@PathVariable("id") Long productID, @PathVariable("stock") Long stock) {
+        return ResponseEntity.ok(productService.addStock(productID, stock));
+    }
 }

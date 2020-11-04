@@ -26,20 +26,20 @@
 </div>
 <div class="menu">
     <ul>
-        <li><a href="#">Certificates</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">About company</a></li>
-        <li><img  alt="background" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOlEjXLPzPVL6lEu6Ar7C4fQ286H5WuNpT0w&usqp=CAU" style="width: 50px;height: 40px;">
-            <div class="dropdown">
-                <button class="dropbtn">Join us</button>
-                <div class="dropdown-content">
-                    <a href="login.html">Login</a>
-                    <a href="#">Register</a>
-                </div>
-            </div>
+        <li>
+            <div class="col-lg-6">
+        <li><input ng-model="auth.username" type="text" placeholder="enter login" class="form-control form-control-lg inverse-mode" /></li>
+        <li><input ng-model="auth.password"  type="password" placeholder="enter password" class="form-control form-control-lg inverse-mode" /></li>
+        <div class="login-buttons">
+            <button ng-click="login(auth)" type="submit" class="btn btn-success btn-block btn-lg">Login</button>
+        </div>
+        </li>
+        <li><p><a href="login.html">login as admin</a></p></li>
         </li>
     </ul>
 </div>
+
+
 <div class="container">
     <h1>Hello {{customer.fullname}}</h1>
 
@@ -80,13 +80,58 @@
                 <td ng-bind="product.categoryId"></td>
                 <td ng-bind="product.price"></td>
                 <td ng-bind="product.stock"></td>
-                <td ng-click="incrementProduct(product)"><button class="btn btn-success btn-md"> Add to cart </button></td>
-                <td ng-click="incrementProduct(product)"><button class="btn btn-danger btn-md"> Delete from cart </button></td>
+                <td ng-if="product.stock > 0" ng-click="incrementProduct(product)"><button class="btn btn-success btn-md"> Add to cart </button></td>
+                <td ng-if="product.stock > 0" ng-click="decrementProduct(product)"><button class="btn btn-danger btn-md"> Delete from cart </button></td>
             </tr>
         </table>
+        <p>{{mess}}</p>
         <button ng-click="sendOrders()" type="button" class="btn btn-success btn-block btn-lg"> Send the order </button>
     </div>
 
+    <div>
+        <table class="table">
+            <thead>
+            <th>ID</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            </thead>
+            <tr ng-repeat="p in orderItemList">
+                <td ng-bind="p.productID"></td>
+                <td ng-bind="p.price"></td>
+                <td ng-bind="p.quantity"></td>
+            </tr>
+            <tr ng-bind="totalPrice"></tr>
+        </table>
+    </div>
+
+    <div>
+        <button ng-if="auth" class="btn btn-warning btn-block btn-lg" ng-click="myOrders()">My Orders</button>
+        <div ng-if="myOrderList" ng-repeat="orders in myOrderList">
+            <table class="table" >
+            <thead>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Weight</th>
+            <th>Price</th>
+            </thead>
+            <tr ng-repeat="p in orders.orderItemList">
+                <td ng-bind="p.product.name"></td>
+                <td ng-bind="p.quantity"></td>
+                <td ng-bind="p.weight"></td>
+                <td ng-bind="p.price"></td>
+            </tr>
+
+        </table>
+            <span>Status: </span><span ng-bind="orders.status"></span><br>
+            <span>Total Price: </span><span ng-bind="orders.totalPrice"></span>
+            <br>
+            <br>
+            <br>
+
+        </div>
+
+
+    </div>
 </div>
 </body>
 

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Customer {
     @Id
     @Column(name = "id")
-    private long id;
+    private long customerId;
 
     @Column(name = "fullname")
     private String fullname;

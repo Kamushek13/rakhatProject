@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Product {
     @Id
     @Column(name = "id")
-    private long id;
+    private long productId;
 
  /*   @Column(name = "image")
     private byte image;*/
@@ -41,8 +41,9 @@ public class Product {
     private long categoryId;
 
     @Column(name = "price")
-    private double price;
+    private float price;
 
     @Column(name = "stock")
     private long stock;
+
 }

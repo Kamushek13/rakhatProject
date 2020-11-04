@@ -22,6 +22,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
     @GetMapping("/customer/me")
     public ResponseEntity<?> me(@RequestHeader("Auth") String token) throws Exception {
         return ResponseEntity.ok(authService.getCustomerByToken(token));

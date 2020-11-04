@@ -1,5 +1,6 @@
 package com.java.rakhatProject.service;
 
+import com.java.rakhatProject.entity.Order;
 import com.java.rakhatProject.entity.Product;
 import com.java.rakhatProject.repository.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -22,5 +23,11 @@ public class ProductService {
 
     public Product save(Product group) {
         return productRepository.save(group);
+    }
+
+    public Object addStock(Long productID, Long stock) {
+        Product product = productRepository.findByProductId(productID);
+        product.setStock(product.getStock()+stock);
+        return productRepository.save(product);
     }
 }

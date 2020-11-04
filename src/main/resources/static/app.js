@@ -61,13 +61,6 @@ app.controller('ProductCtrl', function($scope, $http) {
     $scope.getCategories();
     $scope.getProducts();
 
-
-
-    $scope.auth = {
-        username: '',
-        password: ''
-    };
-
     $scope.customer = {};
 
     $scope.login = function(auth) {
@@ -83,6 +76,7 @@ app.controller('ProductCtrl', function($scope, $http) {
         })
             .then(function (response) {
                     $scope.auth = response.data;
+                    console.log($scope.auth);
                     $scope.getMe();
                 },
                 function (response) { // optional
@@ -110,23 +104,187 @@ app.controller('ProductCtrl', function($scope, $http) {
                 });
     };
 
-    let orderItemList = {};
+    $scope.orderItemList = {};
+    $scope.mess = '';
+    $scope.totalPrice = 0;
 
     $scope.incrementProduct = function (product) {
-        if(orderItemList[product.id] === undefined) orderItemList[product.id] = {productID: product.id, price: product.price, quantity: 0};
-        orderItemList[product.id].quantity = orderItemList[product.id].quantity + 1;
+        if($scope.orderItemList[product.productId] === undefined) $scope.orderItemList[product.productId] = {productID: product.productId, price: product.price, quantity: 0};
+        if($scope.orderItemList[product.productId].quantity < product.stock) {
+            $scope.orderItemList[product.productId].quantity = $scope.orderItemList[product.productId].quantity + 1;
+        }
+        $scope.totalPrice = 0;
+        angular.forEach($scope.orderItemList, function (value) {
+            $scope.totalPrice += value.price * value.quantity;
+        });
     };
 
+    $scope.decrementProduct = function (product) {
+        $scope.mess = '';
+        if($scope.orderItemList[product.productId] === undefined) {
+            $scope.mess = 'You cant delete product which is not in bin';
+        } else {
+            $scope.orderItemList[product.productId].quantity = $scope.orderItemList[product.productId].quantity - 1;
+            if ($scope.orderItemList[product.productId].quantity == 0) {
+                delete $scope.orderItemList[product.productId];
+            }
 
+        }
+        $scope.totalPrice = 0;
+        angular.forEach($scope.orderItemList, function (value) {
+            $scope.totalPrice += value.price * value.quantity;
+        });
+    };
+
+    let id = [];
+    let ID = function (){
+        angular.forEach($scope.orderItemList, function (value){
+            id.push(value.productID);
+        });
+        console.log(id);
+    }
+
+    let quantity = [];
+    let Quantity = function (){
+
+        angular.forEach($scope.orderItemList, function (value){
+            if (quantity[value.productID] === undefined) {
+                quantity[value.productID] =  value.quantity;
+            }
+        });
+        console.log(quantity);
+    }
 
     $scope.sendOrders = function () {
-        console.log(orderItemList);
+        $scope.mess = '';
+        if (Object.keys($scope.customer).length == 0) {
+            $scope.mess = 'You are not authorized!';
+        } else {
+            if (Object.keys($scope.orderItemList).length == 0) {
+                $scope.mess = 'There is no any products in bin';
+            } else {
+                send();
+            }
+        }
+    }
 
-        let totalPrice = 0;
-        angular.forEach(orderItemList, function (value) {
-            totalPrice += value.price * value.quantity;
-        });
-        console.log(totalPrice);
+    let send = function (){
+        ID();
+        Quantity();
+        $http({
+            url: 'http://127.0.0.1:5000/order/create',
+            method: 'POST',
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                "tokenOfAccount": $scope.auth.token
+            },
+            data: {
+                "id" : id,
+                "quantity": quantity
+            }
+        }).then(function (response){
+            console.log(response);
+            $scope.orderItemList = {};
+            $scope.order = response.data;
+            $scope.getProducts();
+        }, function (response){
+            console.log(response);
+        })
+    }
+
+    /*Show all orders of customer*/
+    $scope.myOrders = function () {
+        $http({
+            url: 'http://127.0.0.1:5000/myOrders',
+            method: 'GET',
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                "tokenOfAccount": $scope.auth.token
+            }
+        }).then(function (response){
+            console.log(response);
+            $scope.myOrderList = response.data;
+        }, function (response){
+            console.log(response);
+        })
+    }
+
+});
+
+app.controller('AdminCtrl', function($scope, $http) {
+    $scope.allOrders = function () {
+        $http({
+            url: 'http://127.0.0.1:5000/orders',
+            method: 'GET',
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+            }
+        }).then(function (response){
+            console.log(response);
+            $scope.orderList = response.data;
+        }, function (response){
+            console.log(response);
+        })
+    }
+    $scope.allOrders();
+
+    $scope.getProducts = function() {
+        $http({
+            url: 'http://127.0.0.1:5000/product',
+            method: "GET",
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (response) {
+                    console.log(response);
+                    $scope.productList = response.data;
+                },
+                function (response) { // optional
+                    console.log(response);
+                });
+    };
+    $scope.getProducts();
+
+    $scope.changeStatus = function (token) {
+        $http({
+            url: 'http://127.0.0.1:5000/status/change',
+            method: "POST",
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                "OrderToken": token
+            }
+        })
+            .then(function (response) {
+                    console.log(response);
+                    $scope.allOrders();
+                },
+                function (response) {
+                    console.log(response);
+                });
+    }
+
+    $scope.addStock = function (pr, id){
+        $http({
+            url: 'http://127.0.0.1:5000/add/'+id+"/"+pr.stock,
+            method: "POST",
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+            }
+        })
+            .then(function (response) {
+                    console.log(response);
+                    $scope.getProducts();
+                },
+                function (response) {
+                    console.log(response);
+                });
     }
 
 });

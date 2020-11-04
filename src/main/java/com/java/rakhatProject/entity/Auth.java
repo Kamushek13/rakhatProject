@@ -27,4 +27,5 @@ public class Auth {
 
     @Column(name = "token")
     private String token;
+
 }

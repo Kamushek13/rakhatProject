@@ -4,6 +4,7 @@ import com.java.rakhatProject.entity.Auth;
 import com.java.rakhatProject.entity.Customer;
 import com.java.rakhatProject.repository.AuthRepository;
 import com.java.rakhatProject.repository.CustomerRepository;
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -29,11 +30,17 @@ public class AuthService {
         String token = UUID.randomUUID().toString();
 
         authDB.setToken(token);
-        return authRepository.save(authDB);
+        authRepository.save(authDB);
+        return authDB;
     }
     public Customer getCustomerByToken(String token) throws Exception {
         Auth authDB = authRepository.findByToken(token);
-        return customerRepository.findById(authDB.getCustomerId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        Customer customer = customerRepository.findByCustomerId(authDB.getCustomerId());
+        if (customer == null) {
+            throw new NotFoundException("Not authorized");
+        } else {
+            return customer;
+        }
     }
 }
 
