@@ -77,4 +77,9 @@ public class OrderService {
 
         return orderRepository.save(order);
     }
+
+    public List<Order> getByStatusId(Long statusId) {
+        return orderRepository.findAllByStatusId(statusId);
+    }
+
 }

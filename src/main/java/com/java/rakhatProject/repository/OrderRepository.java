@@ -1,6 +1,8 @@
 package com.java.rakhatProject.repository;
 
 import com.java.rakhatProject.entity.Order;
+import com.java.rakhatProject.entity.Product;
+import com.java.rakhatProject.entity.Status;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -24,4 +26,10 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
     Order findByToken(String token);
 
     List<Order> findByCustomerId(long id);
+///HERE
+    List<Order> findAllByStatusId(Long statusId);
+
+    Status findByStatusId(long id);
+
+
 }

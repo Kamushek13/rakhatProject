@@ -33,9 +33,7 @@
         <div class="login-buttons">
             <button ng-click="login(auth)" type="submit" class="btn btn-success btn-block btn-lg">Login</button>
         </div>
-        </li>
-        <li><p><a href="login.html">login as admin</a></p></li>
-        </li>
+
     </ul>
 </div>
 
@@ -105,7 +103,19 @@
     </div>
 
     <div>
-        <button ng-if="auth" class="btn btn-warning btn-block btn-lg" ng-click="myOrders()">My Orders</button>
+      <!--  <button ng-if="auth" class="btn btn-warning btn-block btn-lg" ng-click="MyOrders()">My Orders</button> -->
+<!-- HERE -->
+        <div class="row">
+            <div class="col-log-12">
+                <div id="orderStatus" class="m-b-10">
+                <span class="gallery-option-set" id="status" data-option-key="filter">
+                    <button type="button" class="btn btn-warning" ng-repeat="status in StatusList" ng-click="getOrdersByStatusId(status.id)">{{status.name}}</button>
+                </span>
+                </div>
+            </div>
+        </div>
+
+
         <div ng-if="myOrderList" ng-repeat="orders in myOrderList">
             <table class="table" >
             <thead>
@@ -129,8 +139,6 @@
             <br>
 
         </div>
-
-
     </div>
 </div>
 </body>

@@ -40,5 +40,10 @@ public class OrderController {
     public ResponseEntity<?> changeStatus(@RequestHeader("OrderToken") String orderToken){
         return ResponseEntity.ok(orderService.changeStatus(orderToken));
     }
+//hello
+    @GetMapping("/order/status/{statusID}")
+    public ResponseEntity<?> getAllByStatusId(@PathVariable("statusID") Long statusID) {
+        return ResponseEntity.ok(orderService.getByStatusId(statusID));
+    }
 
 }

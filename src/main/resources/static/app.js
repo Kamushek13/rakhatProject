@@ -3,6 +3,8 @@ var app = angular.module('rakhat-project', []);
 app.controller('ProductCtrl', function($scope, $http) {
     $scope.productList = [];
     $scope.categoryList = [];
+    $scope.statusList = [];
+
 
     $scope.getProducts = function() {
         $http({
@@ -39,6 +41,26 @@ app.controller('ProductCtrl', function($scope, $http) {
                     console.log(response);
                 });
     };
+// HERE
+    $scope.getStatus = function() {
+        $http({
+            url: 'http://127.0.0.1:5000/status',
+            method: "GET",
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (response) {
+                    console.log(response);
+                    $scope.statusList = response.data;
+                },
+                function (response) {
+                    console.log(response);
+                });
+    };
+
+
 
     $scope.getProductsByCategory = function(categoryID) {
         $http({
@@ -193,10 +215,11 @@ app.controller('ProductCtrl', function($scope, $http) {
         })
     }
 
-    /*Show all orders of customer*/
-    $scope.myOrders = function () {
+
+    /*HEREHEREHERE*/
+    $scope.getOrdersByStatusId = function (statusID) {
         $http({
-            url: 'http://127.0.0.1:5000/myOrders',
+            url: 'http://127.0.0.1:5000/myOrders'+ statusID,
             method: 'GET',
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -205,7 +228,7 @@ app.controller('ProductCtrl', function($scope, $http) {
             }
         }).then(function (response){
             console.log(response);
-            $scope.myOrderList = response.data;
+            $scope.stausList = response.data;
         }, function (response){
             console.log(response);
         })
