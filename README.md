@@ -1,6 +1,6 @@
 # rakhatProject
 
-e-commerce web application for candy and chocolate factory
+a part of the e-commerce web application for candy and chocolate factory
 
 Features:
 
